@@ -7,9 +7,14 @@ const Modal = ({ isOpen, onClose,setIsOpen}) => {
 
    const[name,setName]=useState('')
    const[desc,setDesc]=useState('')
+   const[err,setErr]=useState(false)
    const{currentUser}=useContext(AuthContext)
 
    const addTask=()=>{
+    if(name===''){
+      setErr(true)
+      return
+    }
     const obj={
       name:name,
       desc:desc
@@ -31,6 +36,7 @@ const Modal = ({ isOpen, onClose,setIsOpen}) => {
       <div className="modal-content">
         <span className="close" onClick={onClose}>&times;</span>
         <div className='input-container'>
+          {err && <span style={{color:"red"}}>Title cannot be empty</span>}
           <input className='modal-input' type='text' placeholder='Title' onChange={(e)=>setName(e.target.value)}/>
           <input className='modal-input' type='text' placeholder='Description' onChange={(e)=>setDesc(e.target.value)}/>
 
