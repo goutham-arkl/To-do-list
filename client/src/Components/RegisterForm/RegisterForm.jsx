@@ -40,6 +40,7 @@ const RegisterForm = () => {
   return (
     <div className="reg-form-container">
      <div className="reg-wrapper">
+     <span style={{fontSize:"20px"}}>Register</span>
      <div className="reg-input-container">
      <label>Name</label>
      <input type="text" onChange={(e)=>setName(e.target.value)}/>
