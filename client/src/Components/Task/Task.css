@@ -51,6 +51,7 @@
   border-radius: calc(var(--button-height) / 2);
   position: relative;
   transition: 0.3s all ease-in-out;
+  cursor: pointer;
  }
  
  .slider::after {

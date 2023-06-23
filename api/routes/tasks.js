@@ -1,6 +1,9 @@
 const router =require('express').Router()
 const {verifyToken} = require('../middlewares/verify')
 const Task=require('../models/Task')
+const client =require('../redis')
+
+
 
 //create
 router.post('/:id',verifyToken,async(req,res)=>{
@@ -49,15 +52,36 @@ router.delete('/:id',verifyToken,async(req,res)=>{
     }
 })
 
-//getall user tasks
+// getall user tasks
 router.get('/:id',verifyToken,async(req,res)=>{
     try {
-        const tasks=await Task.find({userId:req.params.id})
-        res.status(200).json(tasks) 
+        const userId=req.params.id
+        console.log(userId)
+        
+                const tasks=await Task.find({userId:req.params.id})
+                res.status(200).json(tasks) 
+ 
     } catch (error) {
+
+        console.log(error)
         res.status(500).json(error)
     }
 
+})
+
+//search
+router.get('/search/:id',verifyToken,async(req,res)=>{
+    try {
+        const keyword=req.params.keyword
+        const tasks = await Task.find({
+            userId: req.query.userId,
+            name: { $regex: '^' + keyword + '$', $options: 'i' }
+          });
+          res.status(200).json(tasks)
+    } catch (error) {
+        console.log('😍😍😍')
+        console.log(error)
+    }
 })
 
 module.exports=router
